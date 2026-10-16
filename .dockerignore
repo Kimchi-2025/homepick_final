@@ -1,0 +1,18 @@
+# Git & Documentation
+.git/
+.gitignore
+README.md
+
+# IDE & Local Env
+.env
+.env.*
+.vscode/
+
+# Build outputs (로컬 빌드 결과물 제외 - Docker 내부에서 새로 빌드함)
+.gradle/
+build/
+out/
+bin/
+# Python 데이터 파이프라인 (배포 이미지에 불필요)
+ml-pipeline/
+

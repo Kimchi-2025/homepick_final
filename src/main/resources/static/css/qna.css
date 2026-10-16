@@ -1,0 +1,432 @@
+@charset "utf-8";
+
+/* ==========================================
+   Q&A 게시판 (/qna)
+   - 상단 히어로는 AI 실거래 단지 추천 페이지(ai-recommend.css)와 같은 스타일
+   ========================================== */
+
+/* 1. 가운데 정렬 히어로 */
+.qna-hero {
+    background: linear-gradient(135deg, #0b1f3a 0%, #0d3b73 55%, var(--color-primary) 100%);
+    padding-bottom: 4.5rem; /* 목록 카드가 겹쳐 올라올 공간 */
+}
+
+.qna-hero-glow {
+    background:
+        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.08) 0, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(255, 96, 13, 0.12) 0, transparent 45%);
+    pointer-events: none;
+}
+
+.qna-hero-icon {
+    font-size: 2.25rem;
+    color: #ffd27a;
+}
+
+.qna-hero-title {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    letter-spacing: -1px;
+}
+
+.qna-hero-desc {
+    font-size: var(--fz-sm);
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* 검색 바 (히어로 안 가운데) */
+.qna-search {
+    max-width: 620px;
+}
+
+.qna-search .form-select,
+.qna-search .form-control,
+.qna-search-btn {
+    height: 48px;
+    border: 0;
+    font-size: 0.95rem;
+}
+
+.qna-search .qna-search-type {
+    flex: 0 0 130px;
+    border-radius: 10px 0 0 10px;
+    border-right: 1px solid #e3e7ec;
+    color: #3a4450;
+    font-weight: 600;
+}
+
+.qna-search .form-control:focus,
+.qna-search .form-select:focus {
+    box-shadow: none;
+}
+
+.qna-search .input-group:focus-within {
+    box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.25);
+    border-radius: 10px;
+}
+
+.qna-search-btn {
+    min-width: 92px;
+    border-radius: 0 10px 10px 0 !important;
+    background: var(--color-accent);
+    color: #fff;
+    font-weight: 700;
+}
+
+.qna-search-btn:hover,
+.qna-search-btn:focus {
+    background: #e65500;
+    color: #fff;
+}
+
+.qna-reset {
+    color: #ffd2b3;
+    text-decoration: none;
+    font-size: 0.8rem;
+}
+
+.qna-reset:hover {
+    color: #fff;
+}
+
+@media (max-width: 575.98px) {
+    .qna-search .qna-search-type {
+        flex-basis: 100px;
+    }
+
+    .qna-search-btn {
+        min-width: 52px;
+    }
+}
+
+/* 2. 목록: 히어로 위로 살짝 겹치게 */
+.qna-main {
+    margin-top: -3rem;
+    position: relative;
+}
+
+.qna-meta {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.qna-meta strong {
+    color: #fff;
+}
+
+.qna-card {
+    border: 0;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* 글쓰기 버튼 · 등록 완료 안내 (목록) */
+.qna-write-btn {
+    background: var(--color-accent);
+    color: #fff;
+    font-weight: 700;
+    border-radius: 8px;
+    padding: 0.3rem 0.85rem;
+}
+
+.qna-write-btn:hover,
+.qna-write-btn:focus {
+    background: #e65500;
+    color: #fff;
+}
+
+.qna-alert {
+    background: #e8f6ee;
+    color: #1f7a4d;
+    border: 1px solid #bfe5cf;
+    border-radius: 10px;
+    font-size: 0.9rem;
+}
+
+.qna-alert-warn {
+    background: #fff4e5;
+    color: #a14a00;
+    border-color: #ffd8a8;
+}
+
+/* 목록 제목 링크 */
+.qna-title-link {
+    color: #1f2a37;
+    text-decoration: none;
+}
+
+.qna-title-link:hover,
+.qna-title-link:focus {
+    color: var(--color-primary);
+    text-decoration: underline;
+}
+
+/* 5. 상세 보기 */
+.qna-detail-head {
+    padding: 2rem 2rem 1.25rem;
+    border-bottom: 1px solid #eef1f4;
+}
+
+.qna-detail-no {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+.qna-detail-title {
+    font-size: clamp(1.25rem, 2.6vw, 1.6rem);
+    color: #1f2a37;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+}
+
+.qna-detail-meta {
+    font-size: 0.85rem;
+    color: #6b7580;
+}
+
+.qna-detail-body {
+    padding: 2rem;
+    min-height: 200px;
+    font-size: 1rem;
+    line-height: 1.85;
+    color: #2b3440;
+    white-space: pre-wrap;      /* 작성한 줄바꿈 그대로 */
+    overflow-wrap: anywhere;   /* 긴 URL 등이 카드 밖으로 넘치지 않게 */
+}
+
+.qna-answer {
+    margin: 0 2rem 2rem;
+    padding: 1rem 1.25rem;
+    border-radius: 10px;
+    background: #f5f7fa;
+    color: #4a5562;
+    font-size: 0.9rem;
+}
+
+.qna-neighbors {
+    border: 0;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.qna-neighbor {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.9rem 1.5rem;
+    color: #2b3440;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.qna-neighbor + .qna-neighbor {
+    border-top: 1px solid #eef1f4;
+}
+
+a.qna-neighbor:hover {
+    background: #f0f6fd;
+    color: var(--color-primary);
+}
+
+.qna-neighbor.is-empty {
+    color: #a0a8b2;
+}
+
+.qna-neighbor-label {
+    flex: 0 0 auto;
+    min-width: 72px;
+    font-weight: 700;
+    color: #6b7580;
+}
+
+.qna-neighbor-title {
+    min-width: 0;
+}
+
+/* 관리자 답변 */
+.qna-answer-box {
+    margin: 0 2rem 2rem;
+    padding: 1.25rem 1.5rem;
+    border-radius: 12px;
+    background: #f0f6fd;
+    border-left: 4px solid var(--color-primary);
+}
+
+.qna-answer-badge {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--color-primary);
+}
+
+.qna-answer-body {
+    font-size: 0.97rem;
+    line-height: 1.85;
+    color: #2b3440;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.qna-answer-form {
+    margin: 0 2rem 2rem;
+    padding: 1.25rem 1.5rem;
+    border-radius: 12px;
+    border: 1px dashed #c9d6e3;
+    background: #fbfcfe;
+}
+
+/* 삭제 버튼 · 확인 창 */
+.qna-delete-btn {
+    background: #fff;
+    color: #c0392b;
+    border: 1px solid #f1c4bf;
+}
+
+.qna-delete-btn:hover,
+.qna-delete-btn:focus,
+.qna-delete-btn:disabled {
+    background: #c0392b;
+    border-color: #c0392b;
+    color: #fff;
+}
+
+.qna-delete-solid {
+    background: #c0392b;
+    border-color: #c0392b;
+    color: #fff;
+}
+
+.qna-delete-solid:hover,
+.qna-delete-solid:focus {
+    background: #a93226;
+    border-color: #a93226;
+}
+
+.qna-modal {
+    border: 0;
+    border-radius: 14px;
+}
+
+.qna-modal-icon {
+    font-size: 2rem;
+    color: #c0392b;
+}
+
+@media (max-width: 575.98px) {
+    .qna-detail-head,
+    .qna-detail-body {
+        padding: 1.5rem 1.25rem;
+    }
+
+    .qna-answer,
+    .qna-answer-box,
+    .qna-answer-form {
+        margin: 0 1.25rem 1.5rem;
+    }
+}
+
+/* 4. 글쓰기 화면 */
+.qna-write-wrap {
+    max-width: 860px;
+}
+
+.qna-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #3a4450;
+    margin-bottom: 0.35rem;
+}
+
+.qna-writer {
+    font-size: 0.95rem;
+    color: #1f2a37;
+}
+
+.qna-writer .bi {
+    font-size: 1.35rem;
+    color: var(--color-primary);
+}
+
+.qna-input {
+    border-color: #dfe4ea;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    padding: 0.7rem 0.9rem;
+}
+
+.qna-input:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 0.2rem rgba(0, 106, 201, 0.15);
+}
+
+.qna-textarea {
+    min-height: 240px;
+    resize: vertical;
+    line-height: 1.7;
+}
+
+.qna-counter {
+    font-size: 0.75rem;
+    color: #8a94a0;
+}
+
+.qna-notice {
+    color: #6b7580;
+    background: #f5f7fa;
+    border-radius: 8px;
+    padding: 0.65rem 0.85rem;
+}
+
+.qna-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    min-width: 110px;
+    height: 46px;
+    border-radius: 10px;
+    font-weight: 700;
+}
+
+.qna-submit-btn {
+    background: var(--color-primary);
+    color: #fff;
+}
+
+.qna-submit-btn:hover,
+.qna-submit-btn:focus,
+.qna-submit-btn:disabled {
+    background: #0057a6;
+    color: #fff;
+}
+
+/* 3. 페이지네이션 */
+.qna-pager .page-link {
+    min-width: 40px;
+    margin: 0 3px;
+    border-radius: 8px;
+    border-color: #dfe4ea;
+    color: #3a4450;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.qna-pager .page-link:hover {
+    color: var(--color-primary);
+    background: #eef5fc;
+}
+
+.qna-pager .page-item.active .page-link {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #fff;
+    font-weight: 700;
+}
+
+.qna-pager .page-item.disabled .page-link {
+    color: #b6bdc6;
+    background: transparent;
+}
+
+.qna-pager .page-link:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 106, 201, 0.15);
+}

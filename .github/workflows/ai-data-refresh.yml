@@ -1,0 +1,67 @@
+name: AI 추천 데이터 갱신
+
+# 페이지의 '최신 데이터로 AI 재학습' 버튼 → Spring 이 GitHub API 로 실행
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ai-data-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30  # 수도권 83개 시·군·구 × 6개월(약 500회 호출), 병렬 크롤링으로 보통 5분 이내
+    defaults:
+      run:
+        working-directory: ml-pipeline
+
+    steps:
+      - name: 저장소 준비
+        uses: actions/checkout@v4
+
+      - name: Python 환경 준비
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.9'
+          cache: 'pip'
+          cache-dependency-path: ml-pipeline/requirements.txt
+
+      - name: 라이브러리 설치
+        run: pip install -r requirements.txt
+
+      - name: 공공데이터 크롤링
+        timeout-minutes: 20  # 공공데이터 API 장애로 멈춰도 무한히 기다리지 않음
+        env:
+          DATA_GO_KR_API_KEY: ${{ secrets.DATA_GO_KR_API_KEY }}
+          CRAWL_MONTHS: '6'
+          CRAWL_WORKERS: '8'
+        run: python 01_crawl.py
+
+      - name: 데이터 전처리
+        run: python 02_preprocess.py
+
+      - name: 머신러닝 학습
+        run: python 04_train.py
+
+      # 지도 중심 실거래 조회용 좌표: 캐시(geocode_cache.json)에 없는 새 단지만 카카오 로컬 API 로 조회
+      - name: 단지 좌표 변환
+        timeout-minutes: 10
+        env:
+          KAKAO_REST_API_KEY: ${{ secrets.KAKAO_REST_API_KEY || secrets.KAKAO_CLIENT_ID }}
+        run: python 05_geocode.py
+
+      - name: 학습 결과 반영
+        working-directory: .
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/main/resources/static/data/apartments.json
+          git add ml-pipeline/geocode_cache.json 2>/dev/null || true
+          # [skip render]: 서버가 GitHub 에서 직접 최신 데이터를 받으므로 Render 재배포(세션 초기화) 불필요
+          git commit -m "chore: AI 추천 데이터 갱신 (실거래가 크롤링·재학습) [skip render]"
+          git pull --rebase origin main
+          git push origin HEAD:main
